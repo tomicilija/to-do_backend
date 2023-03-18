@@ -14,7 +14,7 @@ export class Tasks {
   description: string;
 
   @Column()
-  status: string;
+  status: boolean;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;

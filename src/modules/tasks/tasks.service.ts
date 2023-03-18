@@ -19,7 +19,7 @@ export class TasksService {
     const task = new Tasks();
     task.title = title;
     task.description = description;
-    task.status = 'TODO';
+    task.status = false; //uncompleted
     task.userId = userId;
 
     await this.taskRepoitory.save(task);
@@ -32,12 +32,12 @@ export class TasksService {
     return this.taskRepoitory.find();
   }
 
-  async getUserTasks(id:string): Promise<TaskI[]> {
+  async getUserTasks(id: string): Promise<TaskI[]> {
     return this.taskRepoitory.find({
-        where: {
-          userId: id,
-        },
-      });
+      where: {
+        userId: id,
+      },
+    });
   }
 
   async setTaskCompleted(id: string): Promise<TaskI> {
@@ -51,7 +51,9 @@ export class TasksService {
       throw new NotFoundException(`Task with ID: "${id}" not found!`);
     }
 
-    task.status = 'COMPLETED';
+    const datetime = new Date();
+    task.status = !task.status;
+    task.completedAt = datetime;
     await this.taskRepoitory.save(task);
     this.logger.log(`Task with id "${id}" set as completed!`);
     return task;

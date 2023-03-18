@@ -22,7 +22,7 @@ export class UserService {
     return this.userRepoitory.find();
   }
 
-  async getUserWithId(userId: string): Promise<UserI> {
+  async getUserById(userId: string): Promise<UserI> {
     if (userId) {
       const found = await this.userRepoitory.findOne({
         where: {

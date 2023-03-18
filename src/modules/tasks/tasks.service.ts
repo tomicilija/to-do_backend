@@ -35,7 +35,10 @@ export class TasksService {
   async getUserTasks(id: string): Promise<TaskI[]> {
     return this.taskRepoitory.find({
       where: {
-        userId: id,
+        userId: id
+      },
+      order: {
+        createdAt: 'DESC',
       },
     });
   }

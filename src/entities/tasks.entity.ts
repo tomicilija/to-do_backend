@@ -16,10 +16,10 @@ export class Tasks {
   @Column()
   status: string;
 
-  @CreateDateColumn({ type: 'timestamptz' }) // Date_time with timezone
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'timestamptz' }) // Date_time with timezone
+  @Column({ type: 'timestamptz', nullable: true })
   completedAt: Date;
 
   @Column()

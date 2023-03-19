@@ -33,10 +33,24 @@ export class UserService {
         this.logger.error(`User wth ID: "${userId}"" not found!`);
         throw new NotFoundException(`User wth ID: "${userId}" not found`);
       }
-      this.logger.verbose(
-        `Fetched user with "${userId}" ID from the database!`,
-      );
       return found;
     }
+  }
+
+  async deleteUser(id: string): Promise<UserI> {
+    const user = await this.userRepoitory.findOne({
+      where: {
+        id: id,
+      },
+    });
+    if (!user) {
+      this.logger.error(`User with ID: "${id}" not found!`);
+      throw new NotFoundException(`User with ID: "${id}" not found!`);
+    }
+    await this.userRepoitory.remove(user);
+    this.logger.warn(
+      `User with id: "${user.id}" has bee successfully deleted!`,
+    );
+    return user;
   }
 }
